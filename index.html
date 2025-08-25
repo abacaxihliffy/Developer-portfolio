@@ -30,18 +30,22 @@
     body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;background:var(--bg);color:var(--text)}
     a{color:inherit;text-decoration:none}
 
-    /* CENTRO REAL */
+    /* Centro real do layout */
     .container{max-width:var(--container); width:100%; margin-inline:auto; padding:24px}
     .section{margin:28px 0}
 
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    /* NAV */
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
     .brand{display:flex;align-items:center;gap:12px}
     .mono{width:48px;height:48px;border-radius:12px;background:linear-gradient(145deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#fff;box-shadow:0 6px 20px rgba(31,63,170,.25)}
     .mono svg{filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
+    .nav-main{display:flex;gap:10px;align-items:center}
+    .nav-ctl{display:flex;gap:10px;align-items:center}
     .nav a.btn{padding:10px 14px;border-radius:12px;background:var(--panel);border:1px solid rgba(255,255,255,.06);font-weight:600}
-    .nav a.cta{background:var(--accent);color:#fff!important;border:none;font-weight:700;outline:0;box-shadow:0 0 0 0 transparent}
+    .nav a.cta{background:var(--accent);color:#fff!important;border:none;font-weight:800;outline:0;box-shadow:0 0 0 0 transparent}
     .nav a.cta:hover{filter:brightness(1.05)}
     .toggle{display:flex;align-items:center;gap:8px}
+    #lang{padding:8px 10px;border-radius:10px;background:var(--panel);border:1px solid rgba(255,255,255,.1);color:var(--text)}
 
     /* HERO centralizado no desktop, fluido no mobile */
     .hero{
@@ -53,7 +57,7 @@
     .card{background:var(--panel);border:1px solid rgba(255,255,255,.06);padding:24px;border-radius:var(--radius);box-shadow:var(--shadow)}
     .title{font-size:clamp(28px,4vw,44px);line-height:1.15;margin:0 0 8px;text-wrap:balance}
     .subtitle{color:var(--muted);margin:0 0 18px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:var(--accent);color:#fff;font-weight:700}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:var(--accent);color:#fff;font-weight:800}
     .btn.secondary{background:var(--panel);color:var(--text);font-weight:700}
     .btn.secondary:hover{outline:2px solid rgba(0,0,0,.09)}
     .muted{color:var(--muted)}
@@ -73,10 +77,14 @@
 
     .footer{opacity:.7;font-size:14px}
 
-    /* Responsivo */
+    /* Responsivo — NAV em coluna no mobile, com tudo visível */
     @media (max-width:1024px){
       .container{padding:18px}
       .hero{grid-template-columns:1fr;max-width:820px}
+      .nav{gap:12px}
+      .nav-main,.nav-ctl{width:100%;display:flex;flex-direction:column;align-items:stretch}
+      .nav a.btn, .toggle, #lang{width:100%}
+      .nav a.cta{order:-1} /* CTA primeiro no mobile */
     }
     @media (max-width:640px){
       .grid{grid-template-columns:1fr}
@@ -87,6 +95,7 @@
     [data-theme="light"] .card{border-color:rgba(17,24,39,.08)}
     [data-theme="light"] .badge{background:rgba(17,24,39,.06);border-color:rgba(17,24,39,.12)}
     [data-theme="light"] .nav a.btn{background:#f3f4f6;border-color:rgba(17,24,39,.1);color:#111827}
+    [data-theme="light"] #lang{background:#f3f4f6;border-color:rgba(17,24,39,.12);color:#111827}
     [data-theme="light"] .btn{color:#fff}
     [data-theme="light"] .btn.secondary{background:#f3f4f6;color:#111827;border-color:rgba(17,24,39,.15)}
     [data-theme="light"] .nav a.cta{background:var(--accent);color:#fff!important;font-weight:800;box-shadow:0 0 0 2px rgba(17,24,39,.05) inset}
@@ -114,19 +123,23 @@
           <span class="muted" data-i18n="tag">Criador de sites profissionais</span>
         </div>
       </div>
-      <nav style="display:flex;gap:10px;align-items:center">
+
+      <nav class="nav-main">
         <a href="#servicos" class="btn secondary" data-i18n="nav.services">Serviços</a>
         <a href="#portfolio" class="btn secondary" data-i18n="nav.work">Portfólio</a>
         <a href="#contato" class="btn cta" data-i18n="nav.cta">Pedir orçamento</a>
+      </nav>
+
+      <div class="nav-ctl">
         <label class="toggle">
           <input id="theme-toggle" type="checkbox" aria-label="Alternar tema" />
           <span class="muted" data-i18n="theme">Tema claro</span>
         </label>
-        <select id="lang" aria-label="Idioma" style="padding:8px 10px;border-radius:10px;background:var(--panel);border:1px solid rgba(255,255,255,.1);color:var(--text)">
+        <select id="lang" aria-label="Idioma">
           <option value="pt">PT</option>
           <option value="en">EN</option>
         </select>
-      </nav>
+      </div>
     </div>
   </header>
 
@@ -216,22 +229,22 @@
 
     <!-- PORTFÓLIO -->
     <section id="portfolio" class="section">
-      <h2>Portfólio</h2>
+      <h2 data-i18n="portfolio.title">Portfólio</h2>
       <div class="grid">
         <div class="card">
-          <div class="media thumb-16x10"><img src="demo1.png" alt="Loja de produtos de limpeza — demo" /></div>
-          <h3>Loja de produtos de limpeza (demo)</h3>
-          <p class="muted">Catálogo com produtos e categorias + carrinho simples.</p>
+          <div class="media thumb-16x10"><img src="demo1.png" alt="Cleaning store demo" /></div>
+          <h3 data-i18n="portfolio.cleaning_t">Loja de produtos de limpeza (demo)</h3>
+          <p class="muted" data-i18n="portfolio.cleaning_d">Catálogo com produtos e categorias + carrinho simples.</p>
         </div>
         <div class="card">
-          <div class="media thumb-16x10"><img src="demo2.png" alt="Pizzaria — demo" /></div>
-          <h3>Pizzaria (demo)</h3>
-          <p class="muted">Cardápio, pedidos online e foco em conversão mobile.</p>
+          <div class="media thumb-16x10"><img src="demo2.png" alt="Pizzeria demo" /></div>
+          <h3 data-i18n="portfolio.pizza_t">Pizzaria (demo)</h3>
+          <p class="muted" data-i18n="portfolio.pizza_d">Cardápio, pedidos online e foco em conversão mobile.</p>
         </div>
         <div class="card">
-          <div class="media thumb-16x10"><img src="demo3.png" alt="Clínica — institucional (demo)" /></div>
-          <h3>Clínica (institucional – demo)</h3>
-          <p class="muted">Páginas de serviços, equipe, perguntas frequentes e contato.</p>
+          <div class="media thumb-16x10"><img src="demo3.png" alt="Clinic demo" /></div>
+          <h3 data-i18n="portfolio.clinic_t">Clínica (institucional – demo)</h3>
+          <p class="muted" data-i18n="portfolio.clinic_d">Páginas de serviços, equipe, perguntas frequentes e contato.</p>
         </div>
       </div>
     </section>
@@ -330,7 +343,15 @@
         hero:{title:"Sites profissionais focados em resultado",desc:"Criação de sites com performance, SEO e excelente experiência do cliente — ajudando sua empresa a crescer, faturar e organizar processos.",cta:"Pedir orçamento",note:"Design moderno, responsivo e com foco em conversão."},
         services:{lead:"Do primeiro esboço ao site publicado, cuido de todo o processo.",site:"Site institucional / Landing page",site_d:"Sites rápidos, seguros e pensados para vender — com SEO básico e integrações.",link:"Link-in-bio (para Instagram)",link_d:"Página leve com seus links principais, contatos e CTA de conversão.",integrations:"Integrações",integrations_d:"Formulários, CRM, chat, e-mail marketing e ferramentas do seu negócio.",client:"Área do cliente",client_d:"Acesso reservado para orçamentos, documentos e acompanhamento.",forms:"Formulários e consultas",forms_d:"Coleta de dados com validação, automações e respostas por e-mail.",booking:"Agendamentos",booking_d:"Sistema simples para marcar serviços e sincronizar com calendário."},
         process:{title:"Meu processo",step1_t:"1) Reunião por vídeo",step1_d:"Entendo a ideia e os objetivos do seu site. Trago recomendações para um resultado sofisticado e com a sua cara.",step2_t:"2) Protótipo e conteúdo",step2_d:"Entrega de um rascunho navegável + checklist de conteúdo (textos, imagens, ofertas).",step3_t:"3) Desenvolvimento",step3_d:"Código limpo, responsivo e otimizado para velocidade e SEO.",step4_t:"4) Publicação e suporte",step4_d:"Hospedagem, domínio, integrações e suporte pós-lançamento."},
-        work:{rest_d:"Menu, reservas e avaliações, com ênfase em conversão mobile.",clinic_d:"Agendamento simples, perguntas frequentes e formulário de contato."},
+        portfolio:{
+          title:"Portfólio",
+          cleaning_t:"Loja de produtos de limpeza (demo)",
+          cleaning_d:"Catálogo com produtos e categorias + carrinho simples.",
+          pizza_t:"Pizzaria (demo)",
+          pizza_d:"Cardápio, pedidos online e foco em conversão mobile.",
+          clinic_t:"Clínica (institucional – demo)",
+          clinic_d:"Páginas de serviços, equipe, perguntas frequentes e contato."
+        },
         testi:{title:"Depoimentos",a:"Site rápido e bonito, aumentou os contatos da empresa logo na primeira semana.",b:"Atendimento profissional e prazos em dia. Recomendo para quem quer algo bem feito."},
         about:{title:"Sobre mim"},
         contact:{title:"Contato",lead:"Fale comigo para tirar dúvidas ou solicitar um orçamento.",privacy:"Ao enviar, você será redirecionado para o WhatsApp com a mensagem pronta."},
@@ -345,7 +366,15 @@
         hero:{title:"Professional websites focused on results",desc:"High-performance, SEO-friendly websites that enhance customer experience — helping your business grow, sell and stay organized.",cta:"Get a quote",note:"Modern, responsive design with a conversion focus."},
         services:{lead:"From the first sketch to going live, I handle the whole process.",site:"Company website / Landing page",site_d:"Fast, secure sites built to convert — with basic SEO and integrations.",link:"Link-in-bio (for Instagram)",link_d:"Lightweight page with your main links, contacts and a strong CTA.",integrations:"Integrations",integrations_d:"Forms, CRM, chat, email marketing and business tools.",client:"Client area",client_d:"Private access for quotes, documents and follow-ups.",forms:"Forms & enquiries",forms_d:"Validated data capture, automations and email notifications.",booking:"Bookings",booking_d:"Simple scheduling with calendar sync."},
         process:{title:"My process",step1_t:"1) Video meeting",step1_d:"I learn your goals and propose a tailored, sophisticated solution.",step2_t:"2) Prototype & content",step2_d:"Clickable draft + content checklist (copy, images, offers).",step3_t:"3) Development",step3_d:"Clean, responsive code optimized for speed and SEO.",step4_t:"4) Launch & support",step4_d:"Hosting, domain, integrations and post-launch support."},
-        work:{rest_d:"Menu, reservations and reviews with a mobile-first conversion focus.",clinic_d:"Simple booking, FAQs and contact form."},
+        portfolio:{
+          title:"Portfolio",
+          cleaning_t:"Cleaning products store (demo)",
+          cleaning_d:"Catalog with products, categories and simple cart.",
+          pizza_t:"Pizzeria (demo)",
+          pizza_d:"Menu, online orders and mobile-focused conversion.",
+          clinic_t:"Clinic (institutional – demo)",
+          clinic_d:"Service pages, team, FAQ and contact."
+        },
         testi:{title:"Testimonials",a:"Fast, beautiful website — increased enquiries in the first week.",b:"Professional service and on-time delivery. Highly recommended."},
         about:{title:"About me"},
         contact:{title:"Contact",lead:"Get in touch for questions or a quote.",privacy:"You’ll be redirected to WhatsApp with a pre-filled message."},
